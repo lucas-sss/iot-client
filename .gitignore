@@ -1,5 +1,6 @@
 /target/
 /src/test/
+/src/target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
