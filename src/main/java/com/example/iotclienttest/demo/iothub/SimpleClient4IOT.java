@@ -38,9 +38,9 @@ import java.util.concurrent.TimeUnit;
 public class SimpleClient4IOT {
 
     /******这里是客户端需要的参数*******/
-    public static String deviceName = "kb-1";
-    public static String productKey = "a1XXPKW11Ki";
-    public static String secret = "tW9ntBuEOdGzEJvsdgVNjszr7dz9Bpcv";
+    public static String deviceName = "lw1544165961000T";
+    public static String productKey = "a1zQileBXVA";
+    public static String secret = "pRGopFSqDqh2wceaKawioLRkDX7PnfTW";
 
     public static void main(String... strings) throws Exception {
         //客户端设备自己的一个标记，建议是MAC或SN，不能为空，32字符内
@@ -148,8 +148,7 @@ public class SimpleClient4IOT {
         message.setQos(0);
         System.out.println("消息发布: " + eventParams);
         // /sys/{productKey}/{deviceName}/thing/event/{tsl.event.identifier}/post
-        //sampleClient.publish("/sys/a1ePQ9JWJxV/kb-1/thing/event/property/post", message);
-        sampleClient.publish("/sys/a1ePQ9JWJxV/kb-1/thing/event/NOTICEANDEVENT/post", message);
+        sampleClient.publish("/sys/" + productKey + "/" + deviceName + "/thing/event/NOTICEANDEVENT/post", message);
 
 
         //一次订阅永久生效 
@@ -159,7 +158,6 @@ public class SimpleClient4IOT {
         //这个是第二种订阅方式, 订阅某个topic，有独立的callback
         String asyncSubTopic = String.format(IotTopicFormatEnum.OBJECT_MODEL_ASYNC_TOPIC_FORMAT.client(), productKey, deviceName);
         System.out.println("async topic:" + asyncSubTopic);
-        //final String asyncResponseTopic = String.format(IotTopicFormatEnum.ASYNC_BUSINESS_RESPONSE_TOPIC_FORMAT.client(), productKey, deviceName);
         final String asyncResponseTopic = String.format(IotTopicFormatEnum.OBJECT_MODEL_ASYNC_TOPIC_FORMAT.client(), productKey, deviceName) + "_reply";
         System.out.println("async response topic:" + asyncResponseTopic);
         sampleClient.subscribe(asyncSubTopic, new IMqttMessageListener() {
@@ -218,7 +216,6 @@ public class SimpleClient4IOT {
         });
 
         //回复RRPC响应
-        ///sys/a1ePQ9JWJxV/${deviceName}/thing/service/${tsl.event.identifer}
         String rrpcSubTopic = String.format(IotTopicFormatEnum.OBJECT_MODEL_SYNC_TOPIC_FORMAT.client(), productKey, deviceName);
         System.out.println("sync topic:" + rrpcSubTopic);
         sampleClient.subscribe(rrpcSubTopic, new IMqttMessageListener() {
